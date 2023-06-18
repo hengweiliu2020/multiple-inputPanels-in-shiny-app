@@ -1,9 +1,10 @@
 
 # use multiple inputPanels and actionbutton
+# select multiple items in each inputPanel
 # Anthor: Hengwei Liu
 
+
 library(haven)
-library(plotly)
 library(shinydashboard)
 library(DT)
 library(tidyr)
@@ -12,7 +13,7 @@ library(ggplot2)
 library(dplyr)
 library(stringi)
 library(shinythemes)
-library(gt)
+
 
 
 mat <- matrix(NA, nrow = 30, ncol = 4)
@@ -74,15 +75,12 @@ ui <-
                              mainPanel(tableOutput("table_demog"))
                     ),
                     tabPanel("Listing", 
-                              splitLayout(
-                                cellWidths = c("25%", "25%", "25%", "25%"),
-                                inputPanel( selectInput("race","Select a race:",  multiple=TRUE, unique(xy$RACE))),
-                                inputPanel( selectInput("sex","Select a sex:",  multiple=TRUE, unique(xy$SEX))),
-                                inputPanel( selectInput("ethnic","Select an ethnicity:",  multiple=TRUE, unique(xy$ETHNIC))),
-                                actionButton("go_button", "apply")
-                              ),
-                             
-                  
+                              
+                             inputPanel( selectInput("race","Select a race:",  multiple=TRUE, unique(xy$RACE))),
+                             inputPanel( selectInput("sex","Select a sex:",  multiple=TRUE, unique(xy$SEX))),
+                             inputPanel( selectInput("ethnic","Select an ethnicity:",  multiple=TRUE, unique(xy$ETHNIC))),
+                             actionButton("go_button", "apply"),
+                    
                     
                              mainPanel(tableOutput("listing_demog"))
                          
@@ -126,7 +124,7 @@ server <- function(input, output, session) {
   output$listing_demog <- renderTable(
     
     expr = return(goButton()), 
-    width=px(1500)
+    
     )
     
     

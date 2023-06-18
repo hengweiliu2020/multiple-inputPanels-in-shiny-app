@@ -1,6 +1,7 @@
 
 # use multiple inputPanels and actionbutton
-# select one item in each inputPanel
+# select multiple items in each inputPanel
+# put the inputPanel in sidebarmenu
 # Anthor: Hengwei Liu
 
 
@@ -55,7 +56,13 @@ ui <-
     dashboardHeader(title="Data Review"),
     dashboardSidebar(
       sidebarMenu(
-        menuItem("Demographics", tabName="demog")
+        menuItem("Demographics", tabName="demog"),
+        
+        inputPanel( style = "background-color: black", selectInput("race","Select a race:",  multiple=TRUE, unique(xy$RACE))),
+        inputPanel( style = "background-color: black", selectInput("sex","Select a sex:",  multiple=TRUE, unique(xy$SEX))),
+        inputPanel( style = "background-color: black", selectInput("ethnic","Select an ethnicity:",  multiple=TRUE, unique(xy$ETHNIC))),
+        actionButton("go_button", "apply")
+        
         
       )
     ),
@@ -76,10 +83,7 @@ ui <-
                     ),
                     tabPanel("Listing", 
                               
-                             inputPanel( selectInput("race","Select a race:",   unique(xy$RACE))),
-                             inputPanel( selectInput("sex","Select a sex:",   unique(xy$SEX))),
-                             inputPanel( selectInput("ethnic","Select an ethnicity:",   unique(xy$ETHNIC))),
-                             actionButton("go_button", "apply"),
+                          
                     
                     
                              mainPanel(tableOutput("listing_demog"))

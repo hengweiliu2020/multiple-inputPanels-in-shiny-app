@@ -1,10 +1,10 @@
 
 # use multiple inputPanels and actionbutton
-# select one item in each inputPanel
+# put the inputPanels and actionbutton in one row
 # Anthor: Hengwei Liu
 
-
 library(haven)
+
 library(shinydashboard)
 library(DT)
 library(tidyr)
@@ -75,12 +75,15 @@ ui <-
                              mainPanel(tableOutput("table_demog"))
                     ),
                     tabPanel("Listing", 
-                              
-                             inputPanel( selectInput("race","Select a race:",   unique(xy$RACE))),
-                             inputPanel( selectInput("sex","Select a sex:",   unique(xy$SEX))),
-                             inputPanel( selectInput("ethnic","Select an ethnicity:",   unique(xy$ETHNIC))),
-                             actionButton("go_button", "apply"),
-                    
+                              splitLayout(
+                                cellWidths = c("25%", "25%", "25%", "25%"),
+                                inputPanel( selectInput("race","Select a race:",  multiple=TRUE, unique(xy$RACE))),
+                                inputPanel( selectInput("sex","Select a sex:",  multiple=TRUE, unique(xy$SEX))),
+                                inputPanel( selectInput("ethnic","Select an ethnicity:",  multiple=TRUE, unique(xy$ETHNIC))),
+                                actionButton("go_button", "apply")
+                              ),
+                             
+                  
                     
                              mainPanel(tableOutput("listing_demog"))
                          
